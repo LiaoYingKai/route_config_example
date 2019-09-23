@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-export function RouteWithSubRoutes(route) {
+function RouteWithSubRoutes(route) {
 	return (
 		<Route
 			path={route.path}

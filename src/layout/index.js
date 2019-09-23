@@ -1,6 +1,6 @@
 import React from 'react';
 import { HashRouter as Router, } from 'react-router-dom';
-import RouteLayout from './route';
+import LayoutRouter from '../route';
 import LayoutHeader from '../components/layout-header';
 import './style.scss';
 
@@ -9,7 +9,7 @@ function Layout() {
 		<Router>
 			<LayoutHeader/>
 			<div className="home-page__content">
-				<RouteLayout/>
+				<LayoutRouter/>
 			</div>
 		</Router>
 	);

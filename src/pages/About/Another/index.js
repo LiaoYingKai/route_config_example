@@ -1,12 +1,14 @@
 import React, { Component, } from 'react';
 import PropTypes from 'prop-types';
 
-const propTypes = {};
+const propTypes = {
+	match: PropTypes.object
+};
 
-function Another() {
+function Another({ match }) {
 	return (
 		<div>
-			About Another
+			About {match.params.another}
 		</div>
 	);
 }
