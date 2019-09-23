@@ -1,40 +1,61 @@
-有常需要的套件，或更好的檔案配置就會再更新
+# Route Config 配置
 
-# react init
+- route
+    - config.js
+    route 靜態的配置檔，裡面爲引入 component 與設定 router 路徑的地方
+    - index.js
+    只給 layout 使用的，爲第一次載入 renderRoute 與 config 的地方
+    - loadable.js
+    code split 的方式，透過 loadable 可以將引入的 component 做代碼分離，需要的時候再載入 component ，並且可以自定義 Loading 的畫面
+    - renderRoute.js
+    render route 的檔案，透過使用 RenderRoute ，丟入要 render 的 routes ，就可以將頁面透過路徑 render 出來，而路由下面還有路由的話，可以透過 props 下去的 routes ，一樣使用這一個方法
+    ```javascript=
+    // 最外層的 layout，直接引入 route 的 index
+    import LayoutRouter from '../route';
+    
+    function Layout() {
+        return (
+            <Router>
+                <LayoutHeader/>
+                <div className="home-page__content">
+                    <LayoutRouter/>
+                </div>
+            </Router>
+        );
+    }
+    // 底下有其他子路由的話，引入 RenderRoute ，將 props 下去的 routes 丟進去
+    import React, { Component, } from 'react';
+    import PropTypes from 'prop-types';
+    import { RenderRoute } from '../../route/renderRoute';
+    import { NavLink } from 'react-router-dom';
 
-初始化專案的 tmeplate ， 目前安裝的項目爲：
-> 框架
->> react
->> react-dom
+    import './style.scss';
 
-> 前端路由
->> react-router
->> react-router-dom
+    const propTypes = { 
+        routes: PropTypes.array,
+    };
 
-> code splite
->> react-loadable
+    class About extends Component {
+        render() {
+            const { routes } =this.props;
 
-> 狀態管理
->> redux
->> react-redux
->> redux-thunk
->> redux-logger
+            return (
+                <div className="about">
+                    <ul>
+                        <li >
+                            <NavLink to='/about/me'>me</NavLink>
+                        </li>
+                        <li >
+                            <NavLink to='/about/he'>he</NavLink>
+                        </li>
+                    </ul>
+                    {RenderRoute(routes)}
+                </div>
+            );
+        }
+    }
 
-> css / css 預處理器
->> style-loader
->> scss-loader
->> node-scss
+    About.propTypes = propTypes;
 
-> 格式 / eslint
->> eslint
->> eslint-plugin-react
->> eslint-plugin-async-await
-
-> babel
-
-> webpack loader
-
-詳細的可以看 package.json 
-配置可以看 webpack.config.js
-
-- 可與另一個專案 [my react create](https://github.com/LiaoYingKai/my-react-create) 一起看
+    export default About;
+    ```
